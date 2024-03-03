@@ -1,5 +1,5 @@
 const User=require("../Model/userModel");
-const brcypt=require("bcrypt")
+const bcrypt=require("bcrypt")
 module.exports.register= async(req,res,next)=>{
   try{
 
@@ -12,11 +12,37 @@ module.exports.register= async(req,res,next)=>{
     if(emailCheck){
       return res.json({msg:"Email is already used",status:false})
     }
-    const hashedPassword=await brcypt.hash(password,10);
+    const hashedPassword=await bcrypt.hash(password,10);
     const user=await User.create({
       email,username,password:hashedPassword
     })
     delete user.password;
+    return res.json({status:true,user})
+  }
+  catch(ex){
+    next(ex);
+  }
+
+};
+
+
+module.exports.login= async(req,res,next)=>{
+  try{
+
+    const {username,password}=req.body;
+    
+    const user=await User.findOne({username});
+   
+    if(!user){
+      return res.json({msg:"Incorrect username or Password",status:false})
+    }
+    
+    const isPasswordValid=await bcrypt.compare(password,user.password);
+    if(!isPasswordValid){
+      return res.json({msg:"Incorrect username or Password",status:false})
+    }
+    delete user.password;
+    
     return res.json({status:true,user})
   }
   catch(ex){
