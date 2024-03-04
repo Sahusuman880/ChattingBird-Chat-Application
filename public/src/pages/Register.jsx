@@ -34,7 +34,7 @@ function Register() {
       }
       if (data.status === true) {
         localStorage.setItem("chat-app-user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/setavatar");
       }
     }
   };
@@ -163,7 +163,7 @@ const FormContainer = styled.div`
       cursor: pointer;
       border-radius: 0.4rem;
       font-size: 1rem;
-      text-transaform: uppercase;
+      text-transform: uppercase;
       transition: 0.5s ease-in-out;
       &:hover {
         background-color: #4e0eff;
