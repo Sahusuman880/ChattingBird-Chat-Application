@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/chat.svg";
-function Contact({ contacts, currentUser }) {
+function Contact({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSeleceted, setCurrentSelected] = useState(undefined);
+
   useEffect(() => {
     if (currentUser) {
       setCurrentUserImage(currentUser.avatarImage);
       setCurrentUserName(currentUser.username);
     }
   }, [currentUser]);
-  const changeCurrentChat = (index, contact) => {};
+  const changeCurrentChat = (index, contact) => {
+    setCurrentSelected(index);
+    changeChat(contact);
+  };
   return (
     <>
       {currentUserImage && currentUserName && (
@@ -28,6 +32,7 @@ function Contact({ contacts, currentUser }) {
                     index === currentSeleceted ? "selected" : ""
                   }`}
                   key={index}
+                  onClick={() => changeCurrentChat(index, contact)}
                 >
                   <div className="avatar">
                     <img src={contact.avatarImage} alt="avatar" />
@@ -64,7 +69,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 85%;
+
     img {
       height: 2rem;
     }
@@ -73,20 +78,62 @@ const Container = styled.div`
     }
   }
   .contacts {
-    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: auto;
+
     gap: 0.8rem;
+    &::-webkit-scrollbar {
+      width: 0.3rem;
+      &-thumb {
+        background-color: #ffffff39;
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
     .contact {
-      background-color: #ffffff39;
-      min-height: 5rem;
+      background-color: #ffffff34;
+      min-height: 4rem;
+      cursor: pointer;
       width: 90%;
+      border-radius: 0.2rem;
+      padding: 0.4rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: 0.5s ease-in-out;
       .avatar {
         img {
           height: 3rem;
         }
+      }
+      .username {
+        h3 {
+          color: white;
+        }
+      }
+    }
+    .selected {
+      background-color: #9a86f3;
+    }
+  }
+  .current-user {
+    background-color: #0d0d30;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    .avatar {
+      img {
+        height: 3rem;
+        max-inline-size: 100%;
+      }
+    }
+    .username {
+      h2 {
+        color: white;
       }
     }
   }
