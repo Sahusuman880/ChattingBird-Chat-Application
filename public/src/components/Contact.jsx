@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/chat.svg";
+import Logout from "./Logout";
 function Contact({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -16,9 +17,10 @@ function Contact({ contacts, currentUser, changeChat }) {
     setCurrentSelected(index);
     changeChat(contact);
   };
+
   return (
     <>
-      {currentUserImage && currentUserName && (
+      {currentUserName && (
         <Container>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -51,6 +53,9 @@ function Contact({ contacts, currentUser, changeChat }) {
             </div>
             <div className="username">
               <h2>{currentUserName}</h2>
+            </div>
+            <div>
+              <Logout />
             </div>
           </div>
         </Container>
@@ -124,7 +129,7 @@ const Container = styled.div`
 
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     .avatar {
       img {
         height: 3rem;
@@ -134,6 +139,7 @@ const Container = styled.div`
     .username {
       h2 {
         color: white;
+        font-size: 1rem;
       }
     }
   }

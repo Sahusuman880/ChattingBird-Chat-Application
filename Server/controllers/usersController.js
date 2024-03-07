@@ -59,6 +59,7 @@ module.exports.setavatar= async(req,res,next)=>{
     const avatarImage=req.body.image;
     
     const userData=await User.findByIdAndUpdate(userId,{isAvatarImageSet:true,avatarImage});
+
     return  res.json({isSet:true,image:userData.avatarImage})
   }
   catch(ex){

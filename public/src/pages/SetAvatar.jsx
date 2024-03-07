@@ -48,10 +48,11 @@ export default function SetAvatar() {
         userId: user._id,
         image: avatar[selectedAvatar].url,
       });
-
+      console.log(data);
       if (data.isSet) {
         user.isAvatarImageSet = true;
-        user.avatarImage = data.image;
+        user.avatarImage = avatar[selectedAvatar].url;
+
         localStorage.setItem("chat-app-user", JSON.stringify(user));
         navigate("/");
       } else {
